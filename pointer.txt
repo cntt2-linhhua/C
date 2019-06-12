@@ -1,0 +1,295 @@
+POINTER:
+
+1. 
+
+#include <iostream>
+using namespace std;
+typedef int *IntPtrType;//d?nh ngh?a ~ define
+main()
+{
+IntPtrType ptr_a, ptr_b, *ptr_c;
+ptr_a = new int;//cap phat vung nho cho con tro a
+*ptr_a = 3;//gan gia tri tai dia chi ma *prt tro toi  = 3 chinh cai gia tri cua no la a
+ptr_b = ptr_a;//con tro b dang tro toi vung nho con tro  a tro toi
+cout << *ptr_a << " " << *ptr_b << "\n"; //xuat gia cái gia tri cua con tro a và b tro toi 
+ptr_b = new int; //cap phat vung nho cho con tro b là 4 buyt vì kieu int
+*ptr_b = 9;//con con tro cua con tro b co nghi la con tro bang tro den chinh no va gán gia tri cho no là 9
+cout << *ptr_a << " " << *ptr_b << "\n";//xuat ra gia tri cua con tro a , b dang tro toi
+*ptr_b = *ptr_a;//gán gia tri cua con tro p dang tro toi bang gia tri cua con tri cau con tro a dang tro toi
+cout << *ptr_a << " " << *ptr_b << "\n";//xuat ra gia tri cua con tro a dang tro toi 
+delete ptr_a; //thu hoi vung nho da cap phat cho con tro a truoc do
+ptr_a = ptr_b;//con tro a tro toi dua chi con tro b
+cout << *ptr_a << " " << *ptr_b << "\n";//xuat ra gia tri cua con tro cua con tro a tro toi
+ptr_c = &ptr_a;//con tro cua con tro c tro toi dia chi cua con tro a
+cout << *ptr_c << " " << **ptr_c << "\n";//xuat ra cai dia chi cua con tro c dang tro t?i chính là dia chi cua con tro a
+//gia tri cua con tro c dang tro toi
+delete ptr_a;//thu h?i vung nho cua con tro b
+ptr_a = NULL; //?con tro a ko tro den bat ki phan tu nao
+return 0;
+}
+
+
+2.  
+
+#include <iostream>
+using namespace std;
+main()
+{
+int *a = new int[4]{1, 2, 3, 4};
+int *p = a;
+int *p2 = new int;
+//delete[] p;
+delete[] a;
+delete p2;
+}
+
+3.
+
+
+1. Why should we use delete? (Vì sao nên dùng delete)
+
+     - Các bi?n qu?n lý vùng nh? du?c c?p phát là m?t bi?n con tr?, luu d?a ch? ô nh? d?u tiên c?a vùng nh? dó. Các bi?n con tr? này du?c luu trên Stash Segement trong khi vùng nh? mà nó tr? d?n s? du?c luu trên Data Segement vì th? nên khi thao tác v?i nó xong n?u không s? d?ng vùng nh? này n?a thì nên h?y nó b?ng các toán t? delete ho?c delete[] tuong ?ng vì n?u không h?y vùng nh? này tru?c khi chuong trình k?t thúc s? d?n d?n l?i Memory Leak (rò r? vùng nh?), vùng nh? dó s? không du?c tái s? d?ng cho ddeeens khi kh?i d?ng l?i máy tính(ng?t ngu?n di?n ? RAM)
+     - Tránh s? lãng phí khi ta không dùng h?t b? nh? du?c c?p phát, ho?c c?p phát không d? b? nh? d? s? d?ng
+
+2. Khi nào dùng delete?
+
+  - Khi không mu?n s? d?ng ti?p vùng nh? dã du?c c?p phát cho chuong trình trên Heap, chúng ta nên tr? l?i vùng nh? dó cho h? di?u hành.
+
+3. Difference between delete and delete[].
+
+ * delete : Toán t? delete s? gi?i phóng b? nh? và g?i hàm h?y cho m?t d?i tu?ng du?c t?o b?ng new.
+
+ * delete[] : Toán t? delete[] gi?i phóng b? nh? và g?i các hàm h?y cho m?t m?ng các d?i tu?ng du?c t?o b?ng new[].
+
+* Write a demo
+
+- delete :
+#include <iostream>
+using namespace std;
+main()
+{
+    int *p2 = new int;
+    <...>
+    delete p2;
+}
+
+- delete[] :
+#include <iostream>
+using namespace std;
+main()
+{
+    int *p2 = new[] int;
+    <...>
+    delete p2;
+}
+
+
+4.
+
+
+int iVar = 10;
+int *p1 = &iVar;
+int **p2 = &p1;
+
+1. *p1 == 10
+2. *p2 == 0x100
+3. *(*p2) == 10
+
+5.
+
+
+
+#include<iostream>
+#include<string.h>
+#include<stdio.h>
+#include<stdlib.h>
+#include<fstream>
+using namespace std;
+
+struct Student{
+	int id;
+	string name;
+	float score;
+};
+typedef Student SV;
+
+void Menu();
+void Input(SV sv[],int n);
+void Display(SV sv[],int n);
+void SaveToFile(const char *fileName,SV *sv,int n);
+void LoadFromFile(const char *fileName,SV *sv,int n);
+
+int main()
+{
+	int n,choise,entered=0;
+	char *fileName;
+	char c;
+	do{
+		cout<<" Enter the number of students : ";cin>>n;
+	}while(n<=0);
+	SV sv[n];
+	do{
+		Menu();
+		cout<<endl<<"Choise : "; enter:cin>>choise;
+		if( choise>5 || choise<=0)
+		{
+			cout<<endl<<" There is no choice for you  !!!"<<endl;
+			cout<<endl<<" Please choose from 1 to 4 :) : ";
+			goto enter;
+		}else
+		{
+			switch(choise)
+			{
+				case 1:
+					{
+						Input(sv,n);
+						cout<<endl<<"Success!!! :)"<<endl;
+						entered=1;
+						break;
+					}
+				case 2:
+					{
+						if(entered==1)
+						{
+							Display(sv,n);
+						}
+						else
+						{
+							cout<<"Not data :(";
+						}
+						break;
+					}
+				case 3:
+					{
+						SaveToFile("file.txt",sv,n);
+						break;
+					}
+				case 4:
+					{
+						LoadFromFile("file.txt",sv,n);
+						break;
+					}
+			}
+		}
+		cout<<"DO YOU WANT TO CONTINUE: (Y/N) ? ";
+		fflush(stdin);
+		c = getchar();
+	}while(c == 'Y' || c== 'y');
+	return 0;
+}
+
+void Menu()
+{
+	cout<<"******************************************"<<endl;
+    cout<<"**         STUDENTMANAGEMENT            **"<<endl;
+    cout<<"**      1. Input                        **"<<endl;
+    cout<<"**      2. Display                      **"<<endl;
+	cout<<"**      3. Save to file                 **"<<endl;
+	cout<<"**      4. Load from file               **"<<endl;    
+    cout<<"******************************************"<<endl;
+	cout<<"**          Enter your choice           **"<<endl;
+}
+
+void Input(SV sv[],int n)
+{
+	int id;
+	for(int i=0;i<n;i++)
+	{
+		cout<<"Enter student stuff: "<<i+1<<endl;
+		cout<<"Enter ID:"; go:cin>>id;
+		while(true)
+		{
+			int j=0;
+			if(id==sv[j].id)
+			{
+				cout<<endl<<"You have entered the same id :(("<<endl;
+				cout<<endl<<"Please re-enter the id : ";
+				goto go;
+			}
+			else
+			{
+				break;
+			}
+			j++;
+		}
+		sv[i].id=id;
+				cout<<endl<<"Enter name student : ";
+				fflush(stdin);
+				getline(cin,sv[i].name);
+				cin.ignore();
+				cout<<endl<<"Enter score of student :  "<<endl;cin>>sv[i].score;
+		
+	}
+	SaveToFile("file.txt",sv,n);
+}
+
+void Display(SV a[],int n)
+{
+	cout<<"\nID\t\t\t"<<"FULL NAME\t\t\t"<<"SCORE"<<endl;
+	for(int i=0;i<n;i++)
+	{
+		cout<<a[i].id<<"\t\t\t"<<a[i].name<<"\t\t\t"<<a[i].score<<endl;
+	}
+}
+/*void saveToFile(atring fileName)
+{
+	SV sv[];
+	FILE *f = fopen(fileName.cstr(), "w");
+	if(f != nullptr)
+	{
+		fprintf(f,"%d",sv.size);
+		for(int i=0;i<sv.size();i++)
+		{
+			int id(sv[i].id);
+			string name(sv[i].name);
+			string score(sv[i].score);
+			Replace(id, ' ', '_');
+			Replace(name, ' ', '_');
+			Replace(score, ' ', '_');
+			
+			fprintf(f,"n%s %d %s",id.c_str(),name.c_str(),score.c_str())
+		}
+		cout<<"Save to file "<<fileName<<endl;
+		fclose(f);
+	}else{
+		cout<<"ERROR"<<endl;
+	}
+	void Replace(string &str,char to,char by)
+	{
+		for(int i = 0;i<str.lenght();i++)
+		{
+			if(str.at(i))
+		}
+	}*/	
+	void SaveToFile(const char *fileName,SV sv[],int n)
+	{
+		FILE *f = fopen(fileName,"wt");
+		if(f != NULL)
+		{
+			for(int i=0;i<n;i++)
+			{
+				fprintf(f,"%2d %5s   %f\n",sv[i].id,sv[i].name.c_str(),sv[i].score);
+				fprintf(f,"\n");
+			}
+			fclose(f);
+			cout<<"wrote to a text file !!!"<<endl;
+		}
+		else
+		{
+			cout<<"ERROR...Could not open file :(!";
+		}
+	}
+	void LoadFromFile(const char *fileName,SV *sv,int n)
+	{
+		FILE * f = fopen (fileName,"w");
+        fprintf(f, "%2d%5s    %f\n", "ID","NAME", "SCORE");
+    	for(int i = 0;i < n;i++){
+        	fprintf(f, "%2d%7s    %f\n", sv[i].id,sv[i].name.c_str(), sv[i].score);
+    	}
+    	cout << "Load to " << fileName << endl;
+    	fclose (f);
+	}	
+
+
+
+ 
