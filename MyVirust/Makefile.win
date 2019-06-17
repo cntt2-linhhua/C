@@ -4,8 +4,8 @@
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = MyVirust.o main.o $(RES)
-LINKOBJ  = MyVirust.o main.o $(RES)
+OBJ      = MyVirust.o main.o Flu.o Dengue.o Patient.o $(RES)
+LINKOBJ  = MyVirust.o main.o Flu.o Dengue.o Patient.o $(RES)
 LIBS     = -L"C:/Program Files (x86)/Dev-Cpp/MinGW32/lib" -static-libstdc++ -static-libgcc -g3
 INCS     = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
 CXXINCS  = -I"C:/Program Files (x86)/Dev-Cpp/MinGW32/include"
@@ -30,3 +30,12 @@ MyVirust.o: MyVirust.cpp
 
 main.o: main.cpp
 	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
+
+Flu.o: Flu.cpp
+	$(CPP) -c Flu.cpp -o Flu.o $(CXXFLAGS)
+
+Dengue.o: Dengue.cpp
+	$(CPP) -c Dengue.cpp -o Dengue.o $(CXXFLAGS)
+
+Patient.o: Patient.cpp
+	$(CPP) -c Patient.cpp -o Patient.o $(CXXFLAGS)

@@ -1,6 +1,17 @@
 #pragma once
+#include<iostream>
+#include<list>
+#include<cstdio>
+#include<cstdlib>
+#include<ctime>
+#define FLU_BLUE 0
+#define FLU_RED 1
+#define NS3_VIRUS 0
+#define NS5_VIRUS 1
+#define E_VIRUS 2
+using namespace std;
 class MyVirust{
-	private:
+	protected:
 		char*m_dna;
 		int m_resistance;
 	public:
@@ -13,6 +24,9 @@ class MyVirust{
 		int GetM_resistance();		
 		MyVirust(const MyVirust &p);
 		void LoadADNInfomation();
-		int ReduceResistance();
-		
+		void ReduceResistance(int);
+		virtual void DoBorn() = 0;
+		virtual list<MyVirust*> DoClone () = 0;
+		virtual void DoDie() = 0;
+		virtual void InitResistance() = 0;
 };

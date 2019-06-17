@@ -8,13 +8,13 @@ MyVirust::MyVirust()
 	this->m_resistance=0;
 }
 
-MyVirust::MyVirust(char*,int)
+MyVirust::MyVirust(char* m_dna,int m_resistance)
 {
 	this->m_dna=m_dna;
 	this->m_resistance=m_resistance;
 }
 
-void MyVirust::SetM_dna(char*)
+void MyVirust::SetM_dna(char* m_dna)
 {
 	this->m_dna=m_dna;
 }
@@ -58,9 +58,9 @@ void MyVirust::LoadADNInfomation()
 	printf("\n");
 }
 
-int MyVirust::ReduceResistance()
+void MyVirust::ReduceResistance(int medicine_resistance)
 {
-	return 0;
+	m_resistance = m_resistance - medicine_resistance;
 }
 MyVirust::~MyVirust()
 {
