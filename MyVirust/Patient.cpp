@@ -41,7 +41,7 @@
  		cout<<endl<<" Before : "<<(*it)->GetM_resistance();
  		(*it)->ReduceResistance(medicine_resistance);
  		int temp = (*it)->GetM_resistance();
- 		cout<<endl<< " Now : "<<endl;
+ 		cout<<endl<< " Now : "<<temp<<endl;
  		if(temp>0)
  			sum_Viruss_resistance +=temp;
  			
@@ -54,14 +54,20 @@
  			(*it)->DoDie();
  			it = m_virusList.erase(it);
  			//delete *it;
+ 			//if(m_virusList)
  		}
  		else
  		{
  			list<MyVirust*> temp_list = (*it)->DoClone();
- 			for(list<MyVirust*>::iterator tmp = temp_list.begin();tmp != temp_list.end();it++)
+ 			for(list<MyVirust*>::iterator tmp = temp_list.begin();tmp != temp_list.end();tmp++)
  				m_virusList.push_front(*tmp);
  			++it;
  		}
+ 	}
+ 	if (m_virusList.empty())
+ 	{
+ 		cout << "Clear Virus In Patient";
+ 		this->m_state = 0;
  	}
  	cout<<endl<<"Debug m_resistance = "<<m_resistance <<" Virus resistance : "<<sum_Viruss_resistance;
  }
@@ -77,5 +83,5 @@
 	 //	if(m_resistance <= sum_Viruss_resistance)
 	 	//	return 0;
 	 //	else return 1;
-	 return m_state;
+	 	return m_state;
 	 }	
