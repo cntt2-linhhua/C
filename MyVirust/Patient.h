@@ -1,7 +1,6 @@
 #pragma once
 #include<iostream>
 #include<list>
-#include<cstdio>
 #include<cstdlib>
 #include <Windows.h>
 #include "MyVirust.h"
